@@ -1,4 +1,4 @@
-.env
+.envrc
 node_modules
 route/route.rest
 yarn.lock
