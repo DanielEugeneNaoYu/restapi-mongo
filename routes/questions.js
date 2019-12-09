@@ -11,6 +11,19 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:genre/:category/:difficulty', async (req, res) => {
+    try {
+        const questions = await Question.find({
+          "genre" : req.params.genre,
+          "category"  : req.params.category,
+          "difficulty" : req.params.difficulty,
+        })
+        res.json(questions)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 router.get('/:id', getQuestion, (req, res) => {
     res.json(res.question)
 })
