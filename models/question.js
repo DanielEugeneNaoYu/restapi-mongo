@@ -9,6 +9,14 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: true
       },
+    genre  : {
+        type: String,
+        required: true
+      },
+    category  : {
+        type: String,
+        required: true
+      },
     difficulty  : {
         type: String,
         required: true
