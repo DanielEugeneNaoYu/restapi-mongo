@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const options = {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     user: process.env.DB_USER,
     pass: process.env.DB_PASSWORD,
 }
