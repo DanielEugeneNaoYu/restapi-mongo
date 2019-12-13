@@ -3,3 +3,4 @@
 node_modules
 routes/route.rest
 yarn.lock
+data/
