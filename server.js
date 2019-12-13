@@ -17,7 +17,10 @@ db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json())
 
-const questionsRouter = require('./routes/questions');
-app.use('/questions', questionsRouter);
+const standardQuestionsRouter = require('./routes/standardQuestions');
+app.use('/standard', standardQuestionsRouter);
+
+const universalQuestionsRouter = require('./routes/universalQuestions');
+app.use('/universal', universalQuestionsRouter);
 
 app.listen(3000, () => console.log('Server Started'));

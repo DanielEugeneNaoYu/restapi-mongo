@@ -1,26 +1,30 @@
 const mongoose = require('mongoose');
 
-const questionSchema = new mongoose.Schema({
-    question: {
+const standardQuestionSchema = new mongoose.Schema({
+    Question: {
         type: String,
         required: true
       },
-    answer  : {
+    Answer  : {
         type: String,
         required: true
       },
-    genre  : {
+    Type    : {
         type: String,
         required: true
       },
-    category  : {
+    JLPT  : {
         type: String,
         required: true
       },
-    difficulty  : {
+    Difficulty  : {
         type: String,
+        required: true
+      },
+    Recognize  : {
+        type: Boolean,
         required: true
       },
 })
 
-module.exports = mongoose.model('Question', questionSchema)
+module.exports = mongoose.model('standardQuestion', standardQuestionSchema)

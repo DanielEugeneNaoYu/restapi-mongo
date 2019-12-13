@@ -1,48 +1,52 @@
 const express = require('express');
 const router = express.Router();
-const Question = require('../models/question')
+const standardQuestion = require('../models/standardQuestion')
 
 router.get('/', async (req, res) => {
     try {
-        const questions = await Question.find()
-        res.json(questions)
+        const questions = await standardQuestion.find()
+        // res.json(questions)
+        res.json({"results": questions});
+
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-router.get('/:genre/:category/:difficulty', async (req, res) => {
+router.get('/:jlpt/:type', async (req, res) => {
     try {
-        const questions = await Question.find({
-          "genre" : req.params.genre,
-          "category"  : req.params.category,
-          "difficulty" : req.params.difficulty,
+        const questions = await standardQuestion.find({
+          "JLPT"  : req.params.jlpt,
+          "Type"  : req.params.type
         })
-        res.json(questions)
+        res.json({"results": questions})
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-router.get('/:id', getQuestion, (req, res) => {
+router.get('/:id', getStandardQuestion, (req, res) => {
     res.json(res.question)
 })
 
 router.post('/', async (req, res) => {
-    const question = new Question({
-      question: req.body.question,
-      answer: req.body.answer,
-      difficulty: req.body.difficulty, 
+    const question = new standardQuestion({
+      "Question": req.body.Question,
+      "Answer": req.body.Answer,
+      "Type": req.body.Type, 
+      "Recognize": req.body.Recognize,
+      "JLPT": req.body.JLPT,
+      "Difficulty": req.body.Difficulty, 
     })
     try {
-      const newQuestion = await question.save()
-      res.status(201).json(newQuestion)
+      const newStandardQuestion = await question.save()
+      res.status(201).json(newStandardQuestion)
     } catch (err) {
       res.status(400).json({ message: err.message })
     }
 })
 
-router.patch('/:id', getQuestion, async (req, res) => {
+router.patch('/:id', getStandardQuestion, async (req, res) => {
     if (req.body.question != null) {
       res.question.question = req.body.question
     }
@@ -53,14 +57,14 @@ router.patch('/:id', getQuestion, async (req, res) => {
       res.question.difficulty = req.body.difficulty
     }
     try {
-      const updatedQuestion = await res.question.save()
-      res.json(updatedQuestion)
+      const updatedStandardQuestion = await res.question.save()
+      res.json(updatedStandardQuestion)
     } catch (err) {
       res.status(400).json({ message: err.message })
     }
 })
 
-router.delete('/:id', getQuestion, async (req, res) => {
+router.delete('/:id', getStandardQuestion, async (req, res) => {
     try {
       await res.question.remove()
       res.json({ message: 'Deleted Question' })
@@ -69,10 +73,10 @@ router.delete('/:id', getQuestion, async (req, res) => {
     }
 })
 
-async function getQuestion(req, res, next) {
+async function getStandardQuestion(req, res, next) {
     let question
     try {
-      question = await Question.findById(req.params.id)
+      question = await standardQuestion.findById(req.params.id)
       if (question == null) {
         return res.status(404).json({ message: 'Cannot find question' })
       }
