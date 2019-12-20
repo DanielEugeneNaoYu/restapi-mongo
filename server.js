@@ -14,6 +14,7 @@ const db = mongoose.connection;
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'));
 
+const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
@@ -23,4 +24,4 @@ app.use('/standard', standardQuestionsRouter);
 const universalQuestionsRouter = require('./routes/universalQuestions');
 app.use('/universal', universalQuestionsRouter);
 
-app.listen(3000, () => console.log('Server Started'));
+app.listen(PORT, () => console.log(`Server Started on port ${PORT}`));
